@@ -11,15 +11,11 @@ function validateInput($side1, $side2, $side3)
 
     if(!empty($side1) && !empty($side2) && !empty($side3))
     {
-        if($side1 > 0 && $side2 > 0 && $side3 > 0)
+        if(!filter_var($side1, FILTER_VALIDATE_INT) === false && !filter_var($side2, FILTER_VALIDATE_INT) === false && !filter_var($side3, FILTER_VALIDATE_INT) === false)
         {
-            if(!filter_var($side1, FILTER_VALIDATE_INT) === false && !filter_var($side2, FILTER_VALIDATE_INT) === false && !filter_var($side3, FILTER_VALIDATE_INT) === false)
+            if($side1 > 0 && $side2 > 0 && $side3 > 0)
             {
                 $valid = true;
-            }
-            else
-            {
-                $valid = false;
             }
         }
     }
@@ -29,8 +25,6 @@ function validateInput($side1, $side2, $side3)
 
 function calculateTriangle($side1, $side2, $side3)
 {
-    $triangleType = 0;
-
     if($side1 == $side2 && $side2 == $side3)
     {
             //Equilateral
