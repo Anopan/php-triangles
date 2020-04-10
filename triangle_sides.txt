@@ -1,0 +1,4 @@
+Side 1: 3
+Side 2: 4
+Side 3: 5
+You have made a Scalene triangle.

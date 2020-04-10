@@ -60,27 +60,43 @@ function stateTriangle($triangleType)
     {
     case 1:
         echo '<p>You have made a <b>Equilateral</b> triangle.</p>';
+        $triangleTypeText = "You have made a Equilateral triangle.";
     break;
     case 2:
         echo '<p>You have made a <b>Isosceles</b> triangle.</p>';
+        $triangleTypeText = "You have made a Isosceles triangle.";
     break;
     case 3:
         echo '<p>You have made a <b>Scalene</b> triangle.</p>';
+        $triangleTypeText = "You have made a Scalene triangle.";
     break;    
     default:
         echo '<p>You have not made a triangle.</p>';
+        $triangleTypeText = "You have not made a triangle.";
     }
+
+    return($triangleTypeText);
+}
+
+function saveToFile($side1, $side2, $side3, $triangleTypeText)
+{
+    $triangleFile = fopen("triangle_sides.txt", "w+");
+    
+    $saveText = "Side 1: " . $side1 . "\nSide 2: " . $side2 . "\nSide 3: " . $side3 . "\n" . $triangleTypeText;
+
+    fwrite($triangleFile, $saveText);
+
+    fclose($triangleFile);
 }
 
 $side1 = $_POST["side1"];
 $side2 = $_POST["side2"];
 $side3 = $_POST["side3"];
-$triangleFile = fopen("triangle_sides.txt", "w+")
 
 if(validateInput($side1, $side2, $side3))
 {
-    stateTriangle(calculateTriangle($side1, $side2, $side3));
-
+    $triangleTypeText = stateTriangle(calculateTriangle($side1, $side2, $side3));
+    saveToFile($side1, $side2, $side3, $triangleTypeText);
 }
 else
 {
