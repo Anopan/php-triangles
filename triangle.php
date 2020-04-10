@@ -2,7 +2,7 @@
 /*
     Author:     Anopan Kandiah
     Created:    06/04/2020
-    Modified:   07/04/2020
+    Modified:   10/04/2020
 */
 
 function validateInput($side1, $side2, $side3)
