@@ -11,15 +11,16 @@ function validateInput($side1, $side2, $side3)
 
     if(!empty($side1) && !empty($side2) && !empty($side3))
     {
-        $valid = true;
-
-        if(!preg_match("/^[a-zA-Z ]*$/",$side1) && !preg_match("/^[a-zA-Z ]*$/",$side2) && !preg_match("/^[a-zA-Z ]*$/",$side3))
+        if($side1 > 0 && $side2 > 0 && $side3 > 0)
         {
-            $valid = true;
-        }
-        else
-        {
-            $valid = false;
+            if(!filter_var($side1, FILTER_VALIDATE_INT) === false && !filter_var($side2, FILTER_VALIDATE_INT) === false && !filter_var($side3, FILTER_VALIDATE_INT) === false)
+            {
+                $valid = true;
+            }
+            else
+            {
+                $valid = false;
+            }
         }
     }
 
