@@ -1,4 +1,7 @@
-Side 1: 5
-Side 2: 5
-Side 3: 6
-You have made a Isosceles triangle.
+Date: 11/04/2020 12:51:33
+
+Side 1: 9
+Side 2: 9
+Side 3: 9
+
+You have made a Equilateral triangle.

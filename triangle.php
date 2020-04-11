@@ -2,7 +2,7 @@
 /*
     Author:     Anopan Kandiah
     Created:    06/04/2020
-    Modified:   10/04/2020
+    Modified:   11/04/2020
 */
 
 function validateInput($side1, $side2, $side3)
@@ -75,9 +75,12 @@ function stateTriangle($triangleType)
 
 function saveToFile($side1, $side2, $side3, $triangleTypeText)
 {
+    date_default_timezone_set("Australia/Perth");
+    $todayDate = date("d/m/Y H:i:s");
+
     $triangleFile = fopen("triangle_sides.txt", "w+");
-    
-    $saveText = "Side 1: " . $side1 . "\nSide 2: " . $side2 . "\nSide 3: " . $side3 . "\n" . $triangleTypeText;
+
+    $saveText = "Date: " . $todayDate . "\n\nSide 1: " . $side1 . "\nSide 2: " . $side2 . "\nSide 3: " . $side3 . "\n\n" . $triangleTypeText;
 
     fwrite($triangleFile, $saveText);
 
