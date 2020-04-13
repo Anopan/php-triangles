@@ -2,8 +2,106 @@
 /*
     Author:     Anopan Kandiah
     Created:    06/04/2020
-    Modified:   11/04/2020
+    Modified:   13/04/2020
 */
+
+class Triangle
+{
+    private $side1;
+    private $side2;
+    private $side3;
+    private $triangleType;
+    private $triangleTypeText; 
+
+    function __construct()
+    {
+        $this->side1 = null;
+        $this->side2 = null;
+        $this->side3 = null;
+        $this->triangleType = null;
+        $this->triangleTypeText = null;
+    }
+
+    function set_side1($side1)
+    {
+        $this->side1 = $side1;
+    }
+
+    function get_side1()
+    {
+        return($this->side1);
+    }
+
+    function set_side2($side2)
+    {
+        $this->side2 = $side2;
+    }
+
+    function get_side2()
+    {
+        return($this->side2);
+    }
+
+    function set_side3($side3)
+    {
+        $this->side3 = $side3;
+    }
+
+    function get_side3()
+    {
+        return($this->side3);
+    }
+
+    private function calculateTriangle()
+    {
+        if($this->side1 == $this->side2 && $this->side2 == $this->side3)
+        {
+                //Equilateral
+            $this->triangleType = 1;
+        }
+        else if ($this->side1 == $this->side2 || $this->side1 == $this->side3 || $this->side2 == $this->side3)
+        {	
+                //Isosceles
+            $this->triangleType = 2;
+        }	
+        else if ($this->side1 != $this->side2 && $this->side2 != $this->side3)
+        {
+                //Scalene
+            $this->triangleType = 3;
+        }
+        else
+        {
+                //No triangle
+            $this->triangleType = 0;
+        }
+    }
+
+    function stateTriangle()
+    {
+        $this->calculateTriangle();
+
+        switch($this->triangleType) 
+        {
+        case 1:
+            echo '<p>You have made a <b>Equilateral</b> triangle.</p>';
+            $this->triangleTypeText = "You have made a Equilateral triangle.";
+        break;
+        case 2:
+            echo '<p>You have made a <b>Isosceles</b> triangle.</p>';
+            $this->triangleTypeText = "You have made a Isosceles triangle.";
+        break;
+        case 3:
+            echo '<p>You have made a <b>Scalene</b> triangle.</p>';
+            $this->triangleTypeText = "You have made a Scalene triangle.";
+        break;    
+        default:
+            echo '<p>You have not made a triangle.</p>';
+            $this->triangleTypeText = "You have not made a triangle.";
+        }
+
+        return($this->triangleTypeText);
+    }
+}
 
 function validateInput($side1, $side2, $side3)
 {
@@ -23,56 +121,6 @@ function validateInput($side1, $side2, $side3)
     return($valid);
 }
 
-function calculateTriangle($side1, $side2, $side3)
-{
-    if($side1 == $side2 && $side2 == $side3)
-    {
-            //Equilateral
-        $triangleType = 1;
-    }
-    else if ($side1 == $side2 || $side1 == $side3 || $side2 == $side3)
-    {	
-            //Isosceles
-	    $triangleType = 2;
-    }	
-    else if ($side1 != $side2 && $side2 != $side3)
-    {
-            //Scalene
-        $triangleType = 3;
-    }
-    else
-    {
-            //No triangle
-        $triangleType = 0;
-    }
-
-    return($triangleType);
-}
-
-function stateTriangle($triangleType)
-{
-    switch($triangleType) 
-    {
-    case 1:
-        echo '<p>You have made a <b>Equilateral</b> triangle.</p>';
-        $triangleTypeText = "You have made a Equilateral triangle.";
-    break;
-    case 2:
-        echo '<p>You have made a <b>Isosceles</b> triangle.</p>';
-        $triangleTypeText = "You have made a Isosceles triangle.";
-    break;
-    case 3:
-        echo '<p>You have made a <b>Scalene</b> triangle.</p>';
-        $triangleTypeText = "You have made a Scalene triangle.";
-    break;    
-    default:
-        echo '<p>You have not made a triangle.</p>';
-        $triangleTypeText = "You have not made a triangle.";
-    }
-
-    return($triangleTypeText);
-}
-
 function saveToFile($side1, $side2, $side3, $triangleTypeText)
 {
     date_default_timezone_set("Australia/Perth");
@@ -87,14 +135,16 @@ function saveToFile($side1, $side2, $side3, $triangleTypeText)
     fclose($triangleFile);
 }
 
-$side1 = $_POST["side1"];
-$side2 = $_POST["side2"];
-$side3 = $_POST["side3"];
+$triangle = new Triangle();
 
-if(validateInput($side1, $side2, $side3))
+$triangle->set_side1($_POST["side1"]);
+$triangle->set_side2($_POST["side2"]);
+$triangle->set_side3($_POST["side3"]);
+
+if(validateInput($triangle->get_side1(),$triangle->get_side2(),$triangle->get_side3()))
 {
-    $triangleTypeText = stateTriangle(calculateTriangle($side1, $side2, $side3));
-    saveToFile($side1, $side2, $side3, $triangleTypeText);
+    $triangleTypeText = $triangle->stateTriangle();
+    saveToFile($triangle->get_side1(),$triangle->get_side2(),$triangle->get_side3(), $triangleTypeText);
 }
 else
 {
