@@ -2,8 +2,25 @@
 /*
     Author:     Anopan Kandiah
     Created:    06/04/2020
-    Modified:   13/04/2020
+    Modified:   15/04/2020
 */
+
+trait fileSave
+{
+    public function saveToFile($side1, $side2, $side3, $triangleTypeText)
+    {
+        date_default_timezone_set("Australia/Perth");
+        $todayDate = date("d/m/Y H:i:s");
+
+        $triangleFile = fopen("triangle_sides.txt", "w+");
+
+        $saveText = "Date: " . $todayDate . "\n\nSide 1: " . $side1 . "\nSide 2: " . $side2 . "\nSide 3: " . $side3 . "\n\n" . $triangleTypeText;
+
+        fwrite($triangleFile, $saveText);
+
+        fclose($triangleFile);
+    }
+}
 
 class Triangle
 {
@@ -13,7 +30,7 @@ class Triangle
     private $triangleType;
     private $triangleTypeText; 
 
-    function __construct()
+    public function __construct()
     {
         $this->side1 = null;
         $this->side2 = null;
@@ -22,32 +39,32 @@ class Triangle
         $this->triangleTypeText = null;
     }
 
-    function set_side1($side1)
+    public function set_side1($side1)
     {
         $this->side1 = $side1;
     }
 
-    function get_side1()
+    public function get_side1()
     {
         return($this->side1);
     }
 
-    function set_side2($side2)
+    public function set_side2($side2)
     {
         $this->side2 = $side2;
     }
 
-    function get_side2()
+    public function get_side2()
     {
         return($this->side2);
     }
 
-    function set_side3($side3)
+    public function set_side3($side3)
     {
         $this->side3 = $side3;
     }
 
-    function get_side3()
+    public function get_side3()
     {
         return($this->side3);
     }
@@ -76,7 +93,7 @@ class Triangle
         }
     }
 
-    function stateTriangle()
+    public function stateTriangle()
     {
         $this->calculateTriangle();
 
@@ -101,6 +118,8 @@ class Triangle
 
         return($this->triangleTypeText);
     }
+
+    use fileSave;
 }
 
 function validateInput($side1, $side2, $side3)
@@ -121,20 +140,6 @@ function validateInput($side1, $side2, $side3)
     return($valid);
 }
 
-function saveToFile($side1, $side2, $side3, $triangleTypeText)
-{
-    date_default_timezone_set("Australia/Perth");
-    $todayDate = date("d/m/Y H:i:s");
-
-    $triangleFile = fopen("triangle_sides.txt", "w+");
-
-    $saveText = "Date: " . $todayDate . "\n\nSide 1: " . $side1 . "\nSide 2: " . $side2 . "\nSide 3: " . $side3 . "\n\n" . $triangleTypeText;
-
-    fwrite($triangleFile, $saveText);
-
-    fclose($triangleFile);
-}
-
 $triangle = new Triangle();
 
 $triangle->set_side1($_POST["side1"]);
@@ -144,7 +149,7 @@ $triangle->set_side3($_POST["side3"]);
 if(validateInput($triangle->get_side1(),$triangle->get_side2(),$triangle->get_side3()))
 {
     $triangleTypeText = $triangle->stateTriangle();
-    saveToFile($triangle->get_side1(),$triangle->get_side2(),$triangle->get_side3(), $triangleTypeText);
+    $triangle->saveToFile($triangle->get_side1(),$triangle->get_side2(),$triangle->get_side3(), $triangleTypeText);
 }
 else
 {

@@ -1,7 +1,7 @@
-Date: 13/04/2020 17:04:47
+Date: 15/04/2020 18:08:06
 
 Side 1: 5
-Side 2: 7
-Side 3: 7
+Side 2: 6
+Side 3: 6
 
 You have made a Isosceles triangle.
